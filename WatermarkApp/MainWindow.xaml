@@ -6,39 +6,54 @@
         xmlns:local="clr-namespace:WatermarkApp"
         mc:Ignorable="d"
         Title="MainWindow" Height="1280" Width="1920">
-    <Grid Margin="10">
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="2*" />
-            <ColumnDefinition Width="*" />
-        </Grid.ColumnDefinitions>
+    <Grid Background="#1E1E1E" Margin="10" x:Name="DropImageArea">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="4*"/>
+            <RowDefinition Height="2*"/>
+        </Grid.RowDefinitions>
 
-        <Border BorderBrush="Gray" BorderThickness="1" Margin="5">
-            <Image x:Name="PreviewImage" Stretch="Uniform"/>
+        <!-- Controls -->
+        <StackPanel Grid.Row="0" Orientation="Horizontal" Margin="0 0 0 10" HorizontalAlignment="Center" VerticalAlignment="Top" >
+            <Button Content="Загрузить изображение" Click="BtnLoadImage_Click" Padding="10" />
+            <Button Content="Загрузить watermark" Click="BtnLoadWatermark_Click" Padding="10"/>
+            <CheckBox x:Name="UseTextCheckBox" Content="Текст вместо watermark" VerticalAlignment="Center" Foreground="White"/>
+            <TextBox x:Name="WatermarkTextBox" Width="200" Height="28" VerticalAlignment="Center" Margin="5,0,0,0" Text="WATERMARK"/>
+            <Button Content="Обновить предпросмотр" Click="BtnUpdatePreview_Click" Padding="10"/>
+            <Button Content="Сохранить результат" Click="BtnSave_Click" Padding="10"/>
+            <Button Content="Пакетная обработка" Click="BtnBatchProcess_Click" Padding="10"/>
+        </StackPanel>
+
+        <!-- Preview -->
+        <Border Grid.Row="1" Background="#2D2D30" CornerRadius="10" BorderBrush="#444" BorderThickness="1" Margin="5" Padding="5">
+            <Image x:Name="PreviewImage" Stretch="Uniform" />
         </Border>
 
-        <StackPanel Grid.Column="1" Margin="10" Background="#111">
-            <TextBlock Text="Настройки Watermark" Foreground="White" FontWeight="Bold" FontSize="16"/>
+        <!-- Sliders -->
+        <StackPanel Grid.Row="2" Orientation="Vertical" Margin="10" VerticalAlignment="Top">
+            <StackPanel Orientation="Horizontal">
+                <TextBlock Text="Повторы X:" Foreground="White" Width="100"/>
+                <Slider x:Name="SliderX" Minimum="1" Maximum="10" Value="3" Width="300"/>
+                <TextBlock Text="{Binding ElementName=SliderX, Path=Value}" Foreground="White" Width="50"/>
+            </StackPanel>
 
-            <Button Content="Загрузить изображение" Click="LoadImage_Click" Margin="0,10"/>
-            <Button Content="Загрузить watermark (изображение)" Click="LoadWatermark_Click" />
+            <StackPanel Orientation="Horizontal" Margin="0 5 0 0">
+                <TextBlock Text="Повторы Y:" Foreground="White" Width="100"/>
+                <Slider x:Name="SliderY" Minimum="1" Maximum="10" Value="3" Width="300"/>
+                <TextBlock Text="{Binding ElementName=SliderY, Path=Value}" Foreground="White" Width="50"/>
+            </StackPanel>
 
-            <CheckBox x:Name="UseTextCheckBox" Content="Использовать текст вместо изображения" Foreground="White" Margin="0,10"/>
-            <TextBox x:Name="WatermarkTextBox" Text="My Watermark" Margin="0,0,0,10"/>
+            <StackPanel Orientation="Horizontal"  Margin="0 5 0 0">
+                <TextBlock Text="Размер (%):" Foreground="White" Width="100"/>
+                <Slider x:Name="SliderScale" Minimum="10" Maximum="200" Value="100" Width="300"/>
+                <TextBlock Text="{Binding ElementName=SliderScale, Path=Value}" Foreground="White" Width="50"/>
+            </StackPanel>
 
-            <TextBlock Text="Кол-во по X" Foreground="White"/>
-            <Slider x:Name="CountXSlider" Minimum="1" Maximum="10" Value="1" TickFrequency="1" IsSnapToTickEnabled="True" Margin="0,0,0,10"/>
-
-            <TextBlock Text="Кол-во по Y" Foreground="White"/>
-            <Slider x:Name="CountYSlider" Minimum="1" Maximum="10" Value="1" TickFrequency="1" IsSnapToTickEnabled="True" Margin="0,0,0,10"/>
-
-            <TextBlock Text="Размер (%)" Foreground="White"/>
-            <Slider x:Name="SizeSlider" Minimum="10" Maximum="200" Value="100" Margin="0,0,0,10"/>
-
-            <TextBlock Text="Поворот (°)" Foreground="White"/>
-            <Slider x:Name="RotationSlider" Minimum="0" Maximum="360" Value="0" Margin="0,0,0,10"/>
-
-            <Button Content="Обновить предпросмотр" Click="UpdatePreview_Click" Margin="0,10"/>
-            <Button Content="Сохранить результат" Click="SaveResult_Click" />
+            <StackPanel Orientation="Horizontal" Margin="0 5 0 0">
+                <TextBlock Text="Поворот (°):" Foreground="White" Width="100"/>
+                <Slider x:Name="SliderAngle" Minimum="-180" Maximum="180" Value="0" Width="300"/>
+                <TextBlock Text="{Binding ElementName=SliderAngle, Path=Value}" Foreground="White" Width="50"/>
+            </StackPanel>
         </StackPanel>
     </Grid>
 </Window>
